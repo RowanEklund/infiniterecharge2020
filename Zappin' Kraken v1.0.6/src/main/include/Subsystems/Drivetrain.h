@@ -19,6 +19,8 @@ class Drivetrain : public frc::Subsystem {
     double x_position, z_position, linear_displacement;
 
   public:
+    bool arcade = false;
+
     Drivetrain();
     void InitDefaultCommand() override;
 

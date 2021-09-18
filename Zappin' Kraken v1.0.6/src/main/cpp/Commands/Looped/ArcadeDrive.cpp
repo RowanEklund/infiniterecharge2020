@@ -1,20 +1,20 @@
-#include "Commands/Looped/Drive.h"
+#include "Commands/Looped/ArcadeDrive.h"
 #include "Robot.h"
 #include "RobotMap/IDs.h"
 #include "RobotMap/Constants.h"
 
-Drive::Drive() {
+ArcadeDrive::ArcadeDrive() {
   Requires(&Robot::m_drivetrain);
 }
 
-void Drive::Initialize() {
+void ArcadeDrive::Initialize() {
   invert_driving_was_pressed = Robot::m_oi.GetDriverButton(kInvertDrivingButton);
   first_timer = true;
   m_timer.Reset();
   m_timer.Start();
 }
 
-void Drive::Execute() {
+void ArcadeDrive::Execute() {
   if (Robot::m_oi.GetDriverButton(kInvertDrivingButton) == true) {
     if (invert_driving_was_pressed == false) {
       invert_driving *= -1;
@@ -26,9 +26,10 @@ void Drive::Execute() {
     invert_driving_was_pressed = false;
   }
 
-  left_input = Robot::m_oi.GetDriverAxis(kLeftDriveAxis);
-  right_input = Robot::m_oi.GetDriverAxis(kRightDriveAxis);
-  Robot::m_drivetrain.SetCurvedTeleOpArcadeSpeed(invert_driving * ((left_input + right_input) / 2), (left_input - right_input) / 2);
+  left_y_input = Robot::m_oi.GetDriverAxis(kLeftDriveAxisY);
+  right_x_input = Robot::m_oi.GetDriverAxis(kRightDriveAxisX);
+
+  Robot::m_drivetrain.SetCurvedTeleOpArcadeSpeed(invert_driving * left_y_input, invert_driving * (right_x_input * kArcadeRotationalModifier));
 
   if (first_timer == false) {
     if (m_timer.Get() < kSingleRumbleTime) {
@@ -40,10 +41,10 @@ void Drive::Execute() {
   }
 }
 
-bool Drive::IsFinished() {
+bool ArcadeDrive::IsFinished() {
   return false;
 }
 
-void Drive::End() {}
+void ArcadeDrive::End() {}
 
-void Drive::Interrupted() {}
+void ArcadeDrive::Interrupted() {}

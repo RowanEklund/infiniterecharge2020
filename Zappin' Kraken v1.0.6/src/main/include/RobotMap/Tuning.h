@@ -5,6 +5,7 @@
 //Drivetrain
 constexpr double kLeftDriveSpeedAdjustment = 1;
 constexpr double kRightDriveSpeedAdjustment = 1;
+constexpr double kArcadeRotationalModifier = 1;
 
 constexpr double kDrivetrainFrictionDeadband = 0.05;
 constexpr double kDrivetrainFrictionAmount = 0.254;

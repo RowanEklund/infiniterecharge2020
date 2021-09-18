@@ -2,15 +2,15 @@
 
 #include "Util/Libraries.h"
 
-class Drive : public frc::Command {
+class ArcadeDrive : public frc::Command {
   private:
     frc::Timer m_timer;
-    double left_input, right_input;
+    double left_y_input, right_x_input;
     int invert_driving = 1;
     bool invert_driving_was_pressed, first_timer;
 
   public:
-    Drive();
+    ArcadeDrive();
     void Initialize() override;
     void Execute() override;
     bool IsFinished() override;
